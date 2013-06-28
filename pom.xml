@@ -7,6 +7,11 @@
   <packaging>pom</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>Samples</name>
+  <scm>
+    <url>https://github.com/diego-schivo/samples</url>
+    <connection>scm:git:git://github.com/diego-schivo/samples</connection>
+    <developerConnection>scm:git:git://github.com/diego-schivo/samples</developerConnection>
+  </scm>
   <properties>
     <spring.framework.version>3.2.3.RELEASE</spring.framework.version>
   </properties>
