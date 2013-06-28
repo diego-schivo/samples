@@ -29,6 +29,30 @@
             <wtpContextName>${project.artifactId}</wtpContextName>
           </configuration>
         </plugin>
+        <plugin>
+          <groupId>com.mycila.maven-license-plugin</groupId>
+          <artifactId>maven-license-plugin</artifactId>
+          <version>1.9.0</version>
+          <configuration>
+            <header>src/etc/header.txt</header>
+            <includes>
+              <include>src/**/*.java</include>
+            </includes>
+            <properties>
+              <year>${project.inceptionYear}-2013</year>
+              <name>${project.name}</name>
+              <description>${project.description}</description>
+              <url>${project.url}</url>
+            </properties>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
