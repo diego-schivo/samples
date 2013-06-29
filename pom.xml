@@ -233,8 +233,8 @@
     </dependency>
   </dependencies>
   <modules>
-    <module>jpa-domain</module>
-    <module>jpa-dao</module>
+    <module>sample-jpa-domain</module>
+    <module>sample-jpa-dao</module>
     <module>sample-spring-ws</module>
   </modules>
 </project>
