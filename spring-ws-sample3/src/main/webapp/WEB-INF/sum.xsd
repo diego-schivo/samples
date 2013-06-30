@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="qualified"
+  targetNamespace="http://www.diegoschivo.com/samples/spring-ws/sum" xmlns:tns="http://www.diegoschivo.com/samples/spring-ws/sum">
+  <element name="sumRequest">
+    <complexType>
+      <all>
+        <element name="a" type="int" />
+        <element name="b" type="int" />
+      </all>
+    </complexType>
+  </element>
+  <element name="sumResponse" type="int" />
+</schema>
