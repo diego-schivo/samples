@@ -50,7 +50,13 @@
             <header>src/etc/header.txt</header>
             <includes>
               <include>src/**/*.java</include>
+              <include>src/**/*.jsp</include>
+              <include>src/**/*.xml</include>
+              <include>src/**/*.xsd</include>
             </includes>
+            <excludes>
+              <exclude>src/main/webapp/WEB-INF/classes/**/*</exclude>
+            </excludes>
             <properties>
               <year>${project.inceptionYear}-2013</year>
               <name>${project.name}</name>
