@@ -8,10 +8,10 @@
   <jsp:directive.page import="org.springframework.xml.transform.ResourceSource" />
   <html>
     <head>
-      <title>Sample: Spring WS</title>
+      <title>Spring WS Sample 2</title>
     </head>
     <body>
-      <h1>Sample: Spring WS</h1>
+      <h1>Spring WS Sample 2</h1>
       <form action="${pageContext.request.contextPath}/index.jsp" method="get">
         <input type="text" name="a" value="${param.a}" size="4" /><![CDATA[ + ]]>
         <input type="text" name="b" value="${param.b}" size="4" /><![CDATA[ = ]]>

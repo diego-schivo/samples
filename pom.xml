@@ -13,6 +13,7 @@
     <developerConnection>scm:git:git://github.com/diego-schivo/samples</developerConnection>
   </scm>
   <properties>
+    <apache.cxf.version>2.7.5</apache.cxf.version>
     <gwtVersion>2.5.1</gwtVersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <spring.framework.version>3.2.3.RELEASE</spring.framework.version>
@@ -226,6 +227,16 @@
         <scope>provided</scope>
       </dependency>
       <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-frontend-jaxws</artifactId>
+        <version>${apache.cxf.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-transports-http</artifactId>
+        <version>${apache.cxf.version}</version>
+      </dependency>
+      <dependency>
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
         <version>1.2.14</version>
@@ -256,6 +267,7 @@
     </dependency>
   </dependencies>
   <modules>
+    <module>apache-cxf-sample1</module>
     <module>gwt-sample1</module>
     <module>jpa-dao-sample</module>
     <module>jpa-domain-sample</module>
