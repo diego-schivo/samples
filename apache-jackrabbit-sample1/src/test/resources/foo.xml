@@ -1,0 +1,6 @@
+<foo>
+  <bar />
+  <baz>
+    <qux message="Hello World!" />
+  </baz>
+</foo>

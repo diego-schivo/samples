@@ -14,6 +14,7 @@
   </scm>
   <properties>
     <apache.cxf.version>2.7.5</apache.cxf.version>
+    <apache.jackrabbit.version>2.4.4</apache.jackrabbit.version>
     <gwtVersion>2.5.1</gwtVersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <spring.framework.version>3.2.3.RELEASE</spring.framework.version>
@@ -83,6 +84,11 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>javax.jcr</groupId>
+        <artifactId>jcr</artifactId>
+        <version>2.0</version>
+      </dependency>
+      <dependency>
         <groupId>javax.persistence</groupId>
         <artifactId>persistence-api</artifactId>
         <version>1.0.2</version>
@@ -106,24 +112,9 @@
         <scope>provided</scope>
       </dependency>
       <dependency>
-        <groupId>commons-logging</groupId>
-        <artifactId>commons-logging</artifactId>
-        <version>1.1</version>
-      </dependency>
-      <dependency>
-        <groupId>commons-lang</groupId>
-        <artifactId>commons-lang</artifactId>
-        <version>2.6</version>
-      </dependency>
-      <dependency>
         <groupId>commons-collections</groupId>
         <artifactId>commons-collections</artifactId>
         <version>3.2.1</version>
-      </dependency>
-      <dependency>
-        <groupId>commons-pool</groupId>
-        <artifactId>commons-pool</artifactId>
-        <version>1.6</version>
       </dependency>
       <dependency>
         <groupId>commons-dbcp</groupId>
@@ -141,9 +132,64 @@
         </exclusions>
       </dependency>
       <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>2.4</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-lang</groupId>
+        <artifactId>commons-lang</artifactId>
+        <version>2.6</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-logging</groupId>
+        <artifactId>commons-logging</artifactId>
+        <version>1.1</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-pool</groupId>
+        <artifactId>commons-pool</artifactId>
+        <version>1.6</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-frontend-jaxws</artifactId>
+        <version>${apache.cxf.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-transports-http</artifactId>
+        <version>${apache.cxf.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.apache.openjpa</groupId>
         <artifactId>openjpa</artifactId>
         <version>1.2.3</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.jackrabbit</groupId>
+        <artifactId>jackrabbit-api</artifactId>
+        <version>${apache.jackrabbit.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.jackrabbit</groupId>
+        <artifactId>jackrabbit-core</artifactId>
+        <version>${apache.jackrabbit.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.jackrabbit</groupId>
+        <artifactId>jackrabbit-jcr-commons</artifactId>
+        <version>${apache.jackrabbit.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.jackrabbit</groupId>
+        <artifactId>jackrabbit-spi</artifactId>
+        <version>${apache.jackrabbit.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.jackrabbit</groupId>
+        <artifactId>jackrabbit-spi-commons</artifactId>
+        <version>${apache.jackrabbit.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
@@ -233,19 +279,34 @@
         <scope>provided</scope>
       </dependency>
       <dependency>
-        <groupId>org.apache.cxf</groupId>
-        <artifactId>cxf-rt-frontend-jaxws</artifactId>
-        <version>${apache.cxf.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.cxf</groupId>
-        <artifactId>cxf-rt-transports-http</artifactId>
-        <version>${apache.cxf.version}</version>
-      </dependency>
-      <dependency>
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
         <version>1.2.14</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+        <version>1.6.6</version>
+      </dependency>
+      <dependency>
+        <groupId>edu.oswego.cs.concurrent</groupId>
+        <artifactId>com.springsource.edu.oswego.cs.dl.util.concurrent</artifactId>
+        <version>1.3.4</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.derby</groupId>
+        <artifactId>derby</artifactId>
+        <version>10.5.3.0_1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lucene</groupId>
+        <artifactId>lucene-core</artifactId>
+        <version>3.0.3</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.tika</groupId>
+        <artifactId>tika-core</artifactId>
+        <version>1.0</version>
       </dependency>
       <dependency>
         <groupId>junit</groupId>
@@ -274,11 +335,14 @@
   </dependencies>
   <modules>
     <module>apache-cxf-sample1</module>
+    <module>apache-jackrabbit-sample1</module>
     <module>gwt-sample1</module>
+    <module>iterators-sample</module>
     <module>jpa-dao-sample</module>
     <module>jpa-domain-sample</module>
     <module>spring-ws-sample1</module>
     <module>spring-ws-sample2</module>
     <module>spring-ws-sample3</module>
+    <module>threads-sample</module>
   </modules>
 </project>
