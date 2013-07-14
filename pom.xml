@@ -57,6 +57,7 @@
             </includes>
             <excludes>
               <exclude>src/main/webapp/WEB-INF/classes/**/*</exclude>
+              <exclude>src/test/resources/**/*-repository.xml</exclude>
             </excludes>
             <properties>
               <year>${project.inceptionYear}-2013</year>
