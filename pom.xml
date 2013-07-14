@@ -337,6 +337,12 @@
   <modules>
     <module>apache-cxf-sample1</module>
     <module>apache-jackrabbit-sample1</module>
+    <module>apache-jackrabbit-sample2</module>
+    <module>apache-jackrabbit-sample3</module>
+    <module>apache-jackrabbit-sample4</module>
+    <module>apache-jackrabbit-sample5</module>
+    <module>apache-jackrabbit-sample6</module>
+    <module>apache-jackrabbit-sample7</module>
     <module>gwt-sample1</module>
     <module>iterators-sample</module>
     <module>jpa-dao-sample</module>

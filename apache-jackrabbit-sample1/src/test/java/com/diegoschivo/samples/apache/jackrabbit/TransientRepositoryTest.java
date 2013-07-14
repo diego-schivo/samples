@@ -51,12 +51,12 @@ public class TransientRepositoryTest
     private Session session;
 
     @BeforeClass
-    public static void createRepository() throws IOException
+    public static void beforeClass() throws IOException
     {
         tempDir = File.createTempFile("repository", "");
         tempDir.delete();
         tempDir.mkdir();
-        repository = new TransientRepository();// tempDir);
+        repository = new TransientRepository(tempDir);
     }
 
     @Test
@@ -87,6 +87,13 @@ public class TransientRepositoryTest
     }
 
     @Test
+    public void testGetWorkspace() throws RepositoryException
+    {
+        session = repository.login(new SimpleCredentials("admin", "admin".toCharArray()));
+        assertEquals("default", session.getWorkspace().getName());
+    }
+
+    @Test
     public void testAddAndGetNode() throws RepositoryException
     {
         session = repository.login(new SimpleCredentials("admin", "admin".toCharArray()));
@@ -107,7 +114,7 @@ public class TransientRepositoryTest
         session.save();
         try
         {
-            System.out.println(session.getNode("/foo").getNodes());
+            session.getNode("/foo");
             fail();
         }
         catch (PathNotFoundException e)
@@ -148,15 +155,8 @@ public class TransientRepositoryTest
         }
     }
 
-    @Test
-    public void testFoo() throws RepositoryException
-    {
-        session = repository.login(new SimpleCredentials("admin", "admin".toCharArray()));
-        System.out.println(session.getWorkspace().getName());
-    }
-
     @After
-    public void removeAndLogout() throws RepositoryException
+    public void after() throws RepositoryException
     {
         if (session != null)
         {
@@ -170,7 +170,7 @@ public class TransientRepositoryTest
     }
 
     @AfterClass
-    public static void destroyRepository()
+    public static void afterClass()
     {
         tempDir.delete();
     }
