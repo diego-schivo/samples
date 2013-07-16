@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://sum.cxf.apache.samples.diegoschivo.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="SumService" targetNamespace="http://sum.cxf.apache.samples.diegoschivo.com/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://sum.cxf.apache.samples.diegoschivo.com/" elementFormDefault="unqualified" targetNamespace="http://sum.cxf.apache.samples.diegoschivo.com/" version="1.0">
+<xs:element name="sum" type="tns:sum"/>
+<xs:element name="sumResponse" type="tns:sumResponse"/>
+<xs:complexType name="sum">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int"/>
+      <xs:element name="arg1" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="sumResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="sumResponse">
+    <wsdl:part element="tns:sumResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sum">
+    <wsdl:part element="tns:sum" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="Sum">
+    <wsdl:operation name="sum">
+      <wsdl:input message="tns:sum" name="sum">
+    </wsdl:input>
+      <wsdl:output message="tns:sumResponse" name="sumResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SumServiceSoapBinding" type="tns:Sum">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="sum">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="sum">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="sumResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SumService">
+    <wsdl:port binding="tns:SumServiceSoapBinding" name="SumPort">
+      <soap:address location="http://localhost:8080/apache-cxf-sample1/services/sum"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

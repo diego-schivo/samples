@@ -13,6 +13,7 @@
     <developerConnection>scm:git:git://github.com/diego-schivo/samples</developerConnection>
   </scm>
   <properties>
+    <apache.activemq.version>5.8.0</apache.activemq.version>
     <apache.cxf.version>2.7.5</apache.cxf.version>
     <apache.jackrabbit.version>2.4.4</apache.jackrabbit.version>
     <gwtVersion>2.5.1</gwtVersion>
@@ -90,6 +91,12 @@
         <version>2.0</version>
       </dependency>
       <dependency>
+        <groupId>javax.jms</groupId>
+        <artifactId>jms</artifactId>
+        <version>1.1</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
         <groupId>javax.persistence</groupId>
         <artifactId>persistence-api</artifactId>
         <version>1.0.2</version>
@@ -151,6 +158,16 @@
         <groupId>commons-pool</groupId>
         <artifactId>commons-pool</artifactId>
         <version>1.6</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.activemq</groupId>
+        <artifactId>activemq-broker</artifactId>
+        <version>${apache.activemq.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.activemq</groupId>
+        <artifactId>activemq-kahadb-store</artifactId>
+        <version>${apache.activemq.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.cxf</groupId>
@@ -335,7 +352,9 @@
     </dependency>
   </dependencies>
   <modules>
+    <module>apache-activemq-sample1</module>
     <module>apache-cxf-sample1</module>
+    <module>apache-cxf-sample2</module>
     <module>apache-jackrabbit-sample1</module>
     <module>apache-jackrabbit-sample2</module>
     <module>apache-jackrabbit-sample3</module>
