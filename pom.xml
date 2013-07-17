@@ -333,6 +333,18 @@
         <scope>test</scope>
       </dependency>
       <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-testutils</artifactId>
+        <version>${apache.cxf.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-transports-http-jetty</artifactId>
+        <version>${apache.cxf.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-test</artifactId>
         <version>${spring.framework.version}</version>
@@ -355,6 +367,7 @@
     <module>apache-activemq-sample1</module>
     <module>apache-cxf-sample1</module>
     <module>apache-cxf-sample2</module>
+    <module>apache-cxf-sample3</module>
     <module>apache-jackrabbit-sample1</module>
     <module>apache-jackrabbit-sample2</module>
     <module>apache-jackrabbit-sample3</module>
