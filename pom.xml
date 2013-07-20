@@ -141,11 +141,6 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>commons-httpclient</groupId>
-        <artifactId>commons-httpclient</artifactId>
-        <version>3.1</version>
-      </dependency>
-      <dependency>
         <groupId>commons-io</groupId>
         <artifactId>commons-io</artifactId>
         <version>2.4</version>
@@ -201,6 +196,11 @@
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-transports-jms</artifactId>
         <version>${apache.cxf.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>4.2.5</version>
       </dependency>
       <dependency>
         <groupId>org.apache.openjpa</groupId>
