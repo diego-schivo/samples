@@ -179,6 +179,11 @@
       </dependency>
       <dependency>
         <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+        <version>${apache.cxf.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-frontend-jaxws</artifactId>
         <version>${apache.cxf.version}</version>
       </dependency>
@@ -384,6 +389,7 @@
     <module>apache-cxf-sample4</module>
     <module>apache-cxf-sample5</module>
     <module>apache-cxf-sample6-jms</module>
+    <module>apache-cxf-sample7-jaxrs</module>
     <module>apache-jackrabbit-sample1</module>
     <module>apache-jackrabbit-sample2</module>
     <module>apache-jackrabbit-sample3</module>
