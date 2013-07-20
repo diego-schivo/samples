@@ -17,19 +17,29 @@
 package com.diegoschivo.samples.apache.cxf.jms_adder;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.Closeable;
 import java.io.File;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
+import java.util.Map;
 
 import javax.xml.namespace.QName;
+import javax.xml.ws.BindingProvider;
 import javax.xml.ws.Endpoint;
 
 import org.apache.activemq.broker.BrokerService;
 import org.apache.activemq.store.memory.MemoryPersistenceAdapter;
+import org.apache.cxf.transport.jms.JMSMessageHeadersType;
+import org.apache.cxf.transport.jms.JMSPropertyType;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 
+// apache-cxf-2.7.5-src/distribution/src/main/release/samples/jms_queue
 public class JMSAdderTest
 {
 
@@ -43,8 +53,10 @@ public class JMSAdderTest
 
     private Endpoint ep;
 
-    @Test
-    public void testSumOneWay() throws Exception
+    private JMSAdderPortType adder;
+
+    @Before
+    public void before() throws Exception
     {
         broker = new BrokerService();
         broker.setPersistenceAdapter(new MemoryPersistenceAdapter());
@@ -71,20 +83,48 @@ public class JMSAdderTest
 
         File wsdl = new File("src/main/resources/jms_adder.wsdl");
         JMSAdderService service = new JMSAdderService(wsdl.toURI().toURL(), SERVICE_NAME);
-        JMSAdderPortType adder = service.getPort(PORT_NAME, JMSAdderPortType.class);
-        int c = adder.sum(3, 2);
-        Thread.sleep(1000);
-        assertEquals(5, c);
+        adder = service.getPort(PORT_NAME, JMSAdderPortType.class);
+    }
 
-        if (adder instanceof Closeable)
-        {
-            ((Closeable) adder).close();
-        }
+    @Test
+    public void testSum() throws Exception
+    {
+        int c = adder.sum(3, 2);
+        assertEquals(5, c);
+    }
+
+    @Test
+    public void testResponseContext() throws Exception
+    {
+        InvocationHandler handler = Proxy.getInvocationHandler(adder);
+        assertTrue(handler instanceof BindingProvider);
+        BindingProvider bp = (BindingProvider) handler;
+        Map<String, Object> requestContext = bp.getRequestContext();
+        JMSMessageHeadersType requestHeader = new JMSMessageHeadersType();
+        requestHeader.setJMSCorrelationID("JMS_QUEUE_SAMPLE_CORRELATION_ID");
+        requestHeader.setJMSExpiration(3600000L);
+        JMSPropertyType propType = new JMSPropertyType();
+        propType.setName("Test.Prop");
+        propType.setValue("mustReturn");
+        requestHeader.getProperty().add(propType);
+        requestContext.put("org.apache.cxf.jms.client.request.headers", requestHeader);
+        requestContext.put("org.apache.cxf.jms.client.timeout", 1000L);
+        assertEquals(7, adder.sum(4, 3));
+        Map<String, Object> responseContext = bp.getResponseContext();
+        JMSMessageHeadersType responseHdr = (JMSMessageHeadersType) responseContext
+            .get("org.apache.cxf.jms.client.response.headers");
+        assertNotNull(responseHdr);
+        assertEquals("JMS_QUEUE_SAMPLE_CORRELATION_ID", responseHdr.getJMSCorrelationID());
+        assertNotNull(responseHdr.getProperty());
     }
 
     @After
     public void after() throws Exception
     {
+        if (adder instanceof Closeable)
+        {
+            ((Closeable) adder).close();
+        }
         if (ep != null)
         {
             ep.stop();
