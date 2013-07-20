@@ -49,7 +49,7 @@ public class StoreTest
     @Before
     public void before() throws Exception
     {
-        Store store = new Store();
+        Store store = new StoreImpl();
         store.addProduct(new Product("FOO", "Lorem ipsum"));
 
         JAXRSServerFactoryBean serverFactory = new JAXRSServerFactoryBean();

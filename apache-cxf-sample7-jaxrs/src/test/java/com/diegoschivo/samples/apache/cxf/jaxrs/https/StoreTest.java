@@ -48,6 +48,7 @@ import org.junit.Test;
 
 import com.diegoschivo.samples.apache.cxf.jaxrs.Product;
 import com.diegoschivo.samples.apache.cxf.jaxrs.Store;
+import com.diegoschivo.samples.apache.cxf.jaxrs.StoreImpl;
 
 
 public class StoreTest
@@ -74,7 +75,7 @@ public class StoreTest
     @Before
     public void before() throws Exception
     {
-        Store store = new Store();
+        Store store = new StoreImpl();
         store.addProduct(new Product("FOO", "Lorem ipsum"));
 
         JAXRSServerFactoryBean serverFactory = new JAXRSServerFactoryBean();
