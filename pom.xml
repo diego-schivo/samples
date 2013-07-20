@@ -383,6 +383,7 @@
     <module>apache-cxf-sample3</module>
     <module>apache-cxf-sample4</module>
     <module>apache-cxf-sample5</module>
+    <module>apache-cxf-sample6-jms</module>
     <module>apache-jackrabbit-sample1</module>
     <module>apache-jackrabbit-sample2</module>
     <module>apache-jackrabbit-sample3</module>

@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package com.diegoschivo.samples.apache.cxf.jms_adder;
+package com.diegoschivo.samples.apache.cxf.jms.topic.wsdlfirst;
 
 import static org.junit.Assert.assertEquals;
 
@@ -23,38 +23,45 @@ import java.io.File;
 
 import javax.xml.namespace.QName;
 import javax.xml.ws.Endpoint;
+import javax.xml.ws.Holder;
 
 import org.apache.activemq.broker.BrokerService;
 import org.apache.activemq.store.memory.MemoryPersistenceAdapter;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 
-public class JMSAdderTest
+// apache-cxf-2.7.5-src/distribution/src/main/release/samples/jms_pubsub
+public class AdderTest
 {
 
     private static final QName SERVICE_NAME = new QName(
-        "http://samples.diegoschivo.com/apache/cxf/jms_adder",
-        "JMSAdderService");
+        "http://samples.diegoschivo.com/apache/cxf/jms/topic/wsdlfirst",
+        "AdderService");
 
-    private static final QName PORT_NAME = new QName("http://samples.diegoschivo.com/apache/cxf/jms_adder", "AdderPort");
+    private static final QName PORT_NAME = new QName(
+        "http://samples.diegoschivo.com/apache/cxf/jms/topic/wsdlfirst",
+        "AdderPort");
 
     private BrokerService broker;
 
     private Endpoint ep;
 
-    private int c;
+    private AdderPortType adder;
 
-    @Test
-    public void testSumOneWay() throws Exception
+    private Holder<Integer> c = new Holder<Integer>();
+
+    @Before
+    public void before() throws Exception
     {
         broker = new BrokerService();
         broker.setPersistenceAdapter(new MemoryPersistenceAdapter());
-        broker.setDataDirectory("target/activemq_data");
+        broker.setDataDirectory("target/activemq-data");
         broker.addConnector("tcp://localhost:61616");
         broker.start();
 
-        Object implementor = new JMSAdderImpl();
+        Object implementor = new AdderImpl(c);
         String address = "http://cxf.apache.org/transports/jms";
         ep = Endpoint.publish(address, implementor);
         Runtime.getRuntime().addShutdownHook(new Thread()
@@ -71,22 +78,26 @@ public class JMSAdderTest
             }
         });
 
-        File wsdl = new File("src/main/resources/jms_adder.wsdl");
-        JMSAdderService service = new JMSAdderService(wsdl.toURI().toURL(), SERVICE_NAME);
-        JMSAdderPortType adder = service.getPort(PORT_NAME, JMSAdderPortType.class);
+        File wsdl = new File("src/main/resources/com/diegoschivo/samples/apache/cxf/jms/topic/wsdlfirst/adder.wsdl");
+        AdderService service = new AdderService(wsdl.toURI().toURL(), SERVICE_NAME);
+        adder = service.getPort(PORT_NAME, AdderPortType.class);
+    }
+
+    @Test
+    public void testSum() throws Exception
+    {
         adder.sumOneWay(3, 2);
         Thread.sleep(1000);
-        assertEquals(5, c);
-
-        if (adder instanceof Closeable)
-        {
-            ((Closeable) adder).close();
-        }
+        assertEquals(5, c.value.intValue());
     }
 
     @After
     public void after() throws Exception
     {
+        if (adder instanceof Closeable)
+        {
+            ((Closeable) adder).close();
+        }
         if (ep != null)
         {
             ep.stop();
@@ -95,16 +106,6 @@ public class JMSAdderTest
         if (broker != null)
         {
             broker.stop();
-        }
-    }
-
-    @javax.jws.WebService(portName = "AdderPort", serviceName = "JMSAdderService", targetNamespace = "http://samples.diegoschivo.com/apache/cxf/jms_adder", endpointInterface = "com.diegoschivo.samples.apache.cxf.jms_adder.JMSAdderPortType", wsdlLocation = "jms_adder.wsdl")
-    public class JMSAdderImpl implements JMSAdderPortType
-    {
-
-        public void sumOneWay(int a, int b)
-        {
-            c = a + b;
         }
     }
 }

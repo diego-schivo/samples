@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="AdderService" targetNamespace="http://samples.diegoschivo.com/apache/cxf/jms/topic/wsdlfirst"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:jms="http://cxf.apache.org/transports/jms" xmlns:tns="http://samples.diegoschivo.com/apache/cxf/jms/topic/wsdlfirst"
+  xmlns:x1="http://samples.diegoschivo.com/apache/cxf/jms/topic/wsdlfirst/types">
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://samples.diegoschivo.com/apache/cxf/jms/topic/wsdlfirst/types">
+      <element name="sumOneWay">
+        <complexType>
+          <sequence>
+            <element name="a" type="xsd:int" />
+            <element name="b" type="xsd:int" />
+          </sequence>
+        </complexType>
+      </element>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="sumOneWayRequest">
+    <wsdl:part element="x1:sumOneWay" name="in" />
+  </wsdl:message>
+  <wsdl:portType name="AdderPortType">
+    <wsdl:operation name="sumOneWay">
+      <wsdl:input message="tns:sumOneWayRequest" name="sumOneWayRequest" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AdderPortBinding" type="tns:AdderPortType">
+    <soap:binding style="document" transport="http://cxf.apache.org/transports/jms" />
+    <wsdl:operation name="sumOneWay">
+      <soap:operation style="document" />
+      <wsdl:input name="sumOneWayRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AdderService">
+    <wsdl:port binding="tns:AdderPortBinding" name="AdderPort">
+      <jms:address destinationStyle="topic" jndiConnectionFactoryName="ConnectionFactory"
+        jndiDestinationName="dynamicTopics/test.cxf.jmstransport.topic">
+        <jms:JMSNamingProperty name="java.naming.factory.initial" value="org.apache.activemq.jndi.ActiveMQInitialContextFactory" />
+        <jms:JMSNamingProperty name="java.naming.provider.url" value="tcp://localhost:61616" />
+      </jms:address>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
