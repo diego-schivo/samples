@@ -30,8 +30,8 @@ public interface Store
 {
 
     @GET
-    @Path("/products/{id}/")
-    public Product getProduct(@PathParam("id") String id);
+    @Path("/products/{id}")
+    public Product getProduct(@PathParam("id") Long id);
 
     @POST
     @Path("/products/")
@@ -43,5 +43,5 @@ public interface Store
 
     @DELETE
     @Path("/products/{id}")
-    public Response deleteProduct(@PathParam("id") String id);
+    public Response deleteProduct(@PathParam("id") Long id);
 }

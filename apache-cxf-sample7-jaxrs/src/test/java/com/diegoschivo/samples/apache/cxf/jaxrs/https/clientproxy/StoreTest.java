@@ -14,9 +14,10 @@
  *   limitations under the License.
  */
 
-package com.diegoschivo.samples.apache.cxf.jaxrs.https.webclient;
+package com.diegoschivo.samples.apache.cxf.jaxrs.https.clientproxy;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import javax.ws.rs.core.Response;
 
@@ -25,7 +26,7 @@ import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
-import org.apache.cxf.jaxrs.client.WebClient;
+import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.lifecycle.SingletonResourceProvider;
 import org.apache.http.HttpStatus;
 import org.junit.After;
@@ -43,8 +44,6 @@ public class StoreTest
 {
 
     private static final String BASE_URL = "https://localhost:9000";
-
-    private static final String BASE_SERVICE_URL = BASE_URL + "/store/products";
 
     private static final String CLIENT_CONFIG_FILE = "com/diegoschivo/samples/apache/cxf/jaxrs/https/ClientConfig.xml";
 
@@ -76,40 +75,25 @@ public class StoreTest
     @Test
     public void testGet() throws Exception
     {
-        WebClient webClient = WebClient.create(BASE_SERVICE_URL + "/1", CLIENT_CONFIG_FILE);
-        Response response = webClient.get();
-        try
-        {
-            assertEquals(HttpStatus.SC_OK, response.getStatus());
-            assertEquals("FOO", response.readEntity(Product.class).getCode());
-        }
-        finally
-        {
-            response.close();
-        }
+        Store proxy = JAXRSClientFactory.create(BASE_URL, Store.class, CLIENT_CONFIG_FILE);
+        Product product = proxy.getProduct(1L);
+        assertEquals("FOO", product.getCode());
     }
 
     @Test
     public void testGetUnexisting() throws Exception
     {
-        WebClient webClient = WebClient.create(BASE_SERVICE_URL + "/2", CLIENT_CONFIG_FILE);
-        Response response = webClient.get();
-        try
-        {
-            assertEquals(HttpStatus.SC_NO_CONTENT, response.getStatus());
-        }
-        finally
-        {
-            response.close();
-        }
+        Store proxy = JAXRSClientFactory.create(BASE_URL, Store.class, CLIENT_CONFIG_FILE);
+        Product product = proxy.getProduct(2L);
+        assertNull(product);
     }
 
     @Test
     public void testAddProduct() throws Exception
     {
-        WebClient webClient = WebClient.create(BASE_SERVICE_URL, CLIENT_CONFIG_FILE);
+        Store proxy = JAXRSClientFactory.create(BASE_URL, Store.class, CLIENT_CONFIG_FILE);
         Product product = new Product("BAR", "Dolor sit amet");
-        Response response = webClient.post(product);
+        Response response = proxy.addProduct(product);
         try
         {
             assertEquals(HttpStatus.SC_OK, response.getStatus());
@@ -124,9 +108,9 @@ public class StoreTest
     @Test
     public void testUpdateProduct() throws Exception
     {
-        WebClient webClient = WebClient.create(BASE_SERVICE_URL, CLIENT_CONFIG_FILE);
+        Store proxy = JAXRSClientFactory.create(BASE_URL, Store.class, CLIENT_CONFIG_FILE);
         Product product = new Product(1L, "BAR", "Dolor sit amet");
-        Response response = webClient.put(product);
+        Response response = proxy.updateProduct(product);
         try
         {
             assertEquals(HttpStatus.SC_OK, response.getStatus());
@@ -140,9 +124,9 @@ public class StoreTest
     @Test
     public void testUpdateUnexistingProduct() throws Exception
     {
-        WebClient webClient = WebClient.create(BASE_SERVICE_URL, CLIENT_CONFIG_FILE);
+        Store proxy = JAXRSClientFactory.create(BASE_URL, Store.class, CLIENT_CONFIG_FILE);
         Product product = new Product(2L, "BAR", "Dolor sit amet");
-        Response response = webClient.put(product);
+        Response response = proxy.updateProduct(product);
         try
         {
             assertEquals(HttpStatus.SC_NOT_MODIFIED, response.getStatus());
@@ -156,8 +140,8 @@ public class StoreTest
     @Test
     public void testDeleteProduct() throws Exception
     {
-        WebClient webClient = WebClient.create(BASE_SERVICE_URL + "/1", CLIENT_CONFIG_FILE);
-        Response response = webClient.delete();
+        Store proxy = JAXRSClientFactory.create(BASE_URL, Store.class, CLIENT_CONFIG_FILE);
+        Response response = proxy.deleteProduct(1L);
         try
         {
             assertEquals(HttpStatus.SC_OK, response.getStatus());
@@ -171,8 +155,8 @@ public class StoreTest
     @Test
     public void testDeleteUnexistingProduct() throws Exception
     {
-        WebClient webClient = WebClient.create(BASE_SERVICE_URL + "/2", CLIENT_CONFIG_FILE);
-        Response response = webClient.delete();
+        Store proxy = JAXRSClientFactory.create(BASE_URL, Store.class, CLIENT_CONFIG_FILE);
+        Response response = proxy.deleteProduct(2L);
         try
         {
             assertEquals(HttpStatus.SC_NOT_MODIFIED, response.getStatus());

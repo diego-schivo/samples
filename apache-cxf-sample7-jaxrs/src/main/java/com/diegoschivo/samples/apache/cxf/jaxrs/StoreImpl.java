@@ -29,9 +29,9 @@ public class StoreImpl implements Store
 
     private Map<Long, Product> products = new HashMap<Long, Product>();
 
-    public Product getProduct(String id)
+    public Product getProduct(Long id)
     {
-        return products.get(Long.parseLong(id));
+        return products.get(id);
     }
 
     public Response addProduct(Product product)
@@ -55,9 +55,9 @@ public class StoreImpl implements Store
         }
     }
 
-    public Response deleteProduct(String id)
+    public Response deleteProduct(Long id)
     {
-        Product existing = products.get(Long.parseLong(id));
+        Product existing = products.get(id);
         if (existing != null)
         {
             products.remove(id);

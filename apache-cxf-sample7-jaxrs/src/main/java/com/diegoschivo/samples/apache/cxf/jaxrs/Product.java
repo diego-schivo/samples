@@ -35,6 +35,12 @@ public class Product
 
     public Product(String code, String name)
     {
+        this(null, code, name);
+    }
+
+    public Product(Long id, String code, String name)
+    {
+        this.id = id;
         this.code = code;
         this.name = name;
     }
