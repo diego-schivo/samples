@@ -19,16 +19,15 @@ package com.diegoschivo.samples.apache.cxf.jms.queue.javafirst;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.lang.reflect.Method;
+import java.io.Closeable;
 
+import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
 import org.apache.cxf.transport.jms.spec.JMSSpecConstants;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.diegoschivo.samples.apache.cxf.jms.queue.javafirst.Adder;
-import com.diegoschivo.samples.apache.cxf.jms.queue.javafirst.AdderImpl;
 
 
 // apache-cxf-2.7.5-src/distribution/src/main/release/samples/java_first_jms
@@ -40,6 +39,10 @@ public class AdderCxfTest
         + "&jndiInitialContextFactory"
         + "=org.apache.activemq.jndi.ActiveMQInitialContextFactory";
 
+    private Object broker;
+
+    private Server server;
+
     private Adder adder;
 
     @Before
@@ -47,13 +50,10 @@ public class AdderCxfTest
     {
         Class< ? > brokerClass = getClass().getClassLoader().loadClass("org.apache.activemq.broker.BrokerService");
         assertNotNull(brokerClass);
-        Object broker = brokerClass.newInstance();
-        Method addConnectorMethod = brokerClass.getMethod("addConnector", String.class);
-        addConnectorMethod.invoke(broker, "tcp://localhost:61616");
-        Method setDataDirectory = brokerClass.getMethod("setDataDirectory", String.class);
-        setDataDirectory.invoke(broker, "target/activemq-data");
-        Method startMethod = brokerClass.getMethod("start");
-        startMethod.invoke(broker);
+        broker = brokerClass.newInstance();
+        brokerClass.getMethod("addConnector", String.class).invoke(broker, "tcp://localhost:61616");
+        brokerClass.getMethod("setDataDirectory", String.class).invoke(broker, "target/activemq-data");
+        brokerClass.getMethod("start").invoke(broker);
 
         Object implementor = new AdderImpl();
         JaxWsServerFactoryBean svrFactory = new JaxWsServerFactoryBean();
@@ -61,7 +61,7 @@ public class AdderCxfTest
         svrFactory.setTransportId(JMSSpecConstants.SOAP_JMS_SPECIFICATION_TRANSPORTID);
         svrFactory.setAddress(JMS_ENDPOINT_URI);
         svrFactory.setServiceBean(implementor);
-        svrFactory.create();
+        server = svrFactory.create();
 
         JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
         factory.setTransportId(JMSSpecConstants.SOAP_JMS_SPECIFICATION_TRANSPORTID);
@@ -74,5 +74,22 @@ public class AdderCxfTest
     {
         int c = adder.sum(3, 2);
         assertEquals(5, c);
+    }
+
+    @After
+    public void after() throws Exception
+    {
+        if (adder instanceof Closeable)
+        {
+            ((Closeable) adder).close();
+        }
+        if (server != null)
+        {
+            server.stop();
+        }
+        if (broker != null)
+        {
+            broker.getClass().getMethod("stop").invoke(broker);
+        }
     }
 }
