@@ -29,6 +29,12 @@ public class StoreImpl implements Store
 
     private Map<Long, Product> products = new HashMap<Long, Product>();
 
+    public void setProducts(Map<Long, Product> products)
+    {
+        this.products = products;
+        currentId = products.size();
+    }
+
     public Product getProduct(Long id)
     {
         return products.get(id);

@@ -60,7 +60,7 @@ public class StoreTest
     }
 
     @Test
-    public void testGet() throws Exception
+    public void testGetProduct() throws Exception
     {
         HttpGet request = new HttpGet(BASE_SERVICE_URL + "/1");
         request.addHeader("Accept", "text/xml");
@@ -80,7 +80,7 @@ public class StoreTest
     }
 
     @Test
-    public void testGetUnexisting() throws Exception
+    public void testGetUnexistingProduct() throws Exception
     {
         HttpGet request = new HttpGet(BASE_SERVICE_URL + "/2");
         request.addHeader("Accept", "text/xml");

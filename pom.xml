@@ -20,7 +20,9 @@
     <gwtVersion>2.5.1</gwtVersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <spring.framework.version>3.2.3.RELEASE</spring.framework.version>
+    <spring.security.version>3.0.7.RELEASE</spring.security.version>
     <spring.ws.version>2.1.3.RELEASE</spring.ws.version>
+    <jetty.version>8.1.8.v20121106</jetty.version>
   </properties>
   <build>
     <pluginManagement>
@@ -154,6 +156,12 @@
         <groupId>commons-logging</groupId>
         <artifactId>commons-logging</artifactId>
         <version>1.1</version>
+        <exclusions>
+          <exclusion>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>commons-pool</groupId>
@@ -185,6 +193,11 @@
       <dependency>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-frontend-jaxws</artifactId>
+        <version>${apache.cxf.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-rs-extension-providers</artifactId>
         <version>${apache.cxf.version}</version>
       </dependency>
       <dependency>
@@ -288,6 +301,26 @@
         <version>${spring.framework.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-config</artifactId>
+        <version>${spring.security.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-core</artifactId>
+        <version>${spring.security.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-core-tiger</artifactId>
+        <version>2.0.6.RELEASE</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-web</artifactId>
+        <version>${spring.security.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.springframework.ws</groupId>
         <artifactId>spring-ws-core</artifactId>
         <version>${spring.ws.version}</version>
@@ -350,6 +383,26 @@
         <version>1.0</version>
       </dependency>
       <dependency>
+        <groupId>org.codehaus.jettison</groupId>
+        <artifactId>jettison</artifactId>
+        <version>1.3.3</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-server</artifactId>
+        <version>${jetty.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-servlet</artifactId>
+        <version>${jetty.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-webapp</artifactId>
+        <version>${jetty.version}</version>
+      </dependency>
+      <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>4.11</version>
@@ -395,6 +448,8 @@
     <module>apache-cxf-sample5</module>
     <module>apache-cxf-sample6-jms</module>
     <module>apache-cxf-sample7-jaxrs</module>
+    <module>apache-cxf-sample7b-jaxrs-ssl</module>
+    <module>apache-cxf-sample8-spring-security</module>
     <module>apache-jackrabbit-sample1</module>
     <module>apache-jackrabbit-sample2</module>
     <module>apache-jackrabbit-sample3</module>
@@ -402,6 +457,8 @@
     <module>apache-jackrabbit-sample5</module>
     <module>apache-jackrabbit-sample6</module>
     <module>apache-jackrabbit-sample7</module>
+    <module>eclipse-jetty-sample1-servlet</module>
+    <module>eclipse-jetty-sample2-spring</module>
     <module>gwt-sample1</module>
     <module>iterators-sample</module>
     <module>jpa-dao-sample</module>
