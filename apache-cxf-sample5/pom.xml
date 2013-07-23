@@ -20,7 +20,7 @@
       <plugin>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-codegen-plugin</artifactId>
-        <version>${apache.cxf.version}</version>
+        <version>${cxf.version}</version>
         <executions>
           <execution>
             <id>generate-sources</id>
@@ -42,7 +42,6 @@
     </plugins>
   </build>
   <dependencies>
-    <!--
     <dependency>
       <groupId>org.apache.activemq</groupId>
       <artifactId>activemq-broker</artifactId>
@@ -50,11 +49,6 @@
     <dependency>
       <groupId>org.apache.activemq</groupId>
       <artifactId>activemq-kahadb-store</artifactId>
-    </dependency>
-    -->
-    <dependency>
-      <groupId>org.apache.activemq</groupId>
-      <artifactId>activemq-core</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.cxf</groupId>

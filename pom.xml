@@ -13,11 +13,12 @@
     <developerConnection>scm:git:git://github.com/diego-schivo/samples</developerConnection>
   </scm>
   <properties>
-    <!--apache.activemq.version>5.8.0</apache.activemq.version-->
-    <apache.activemq.version>5.7.0</apache.activemq.version>
-    <apache.cxf.version>2.7.5</apache.cxf.version>
-    <apache.jackrabbit.version>2.4.4</apache.jackrabbit.version>
+    <activemq.version>5.8.0</activemq.version>
+    <cxf.version>2.7.5</cxf.version>
     <gwtVersion>2.5.1</gwtVersion>
+    <jackrabbit.version>2.6.2</jackrabbit.version>
+    <!--lucene.version>4.3.1</lucene.version-->
+    <lucene.version>3.6.2</lucene.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <spring.framework.version>3.2.3.RELEASE</spring.framework.version>
     <spring.security.version>3.0.7.RELEASE</spring.security.version>
@@ -43,6 +44,7 @@
           <artifactId>maven-eclipse-plugin</artifactId>
           <version>2.9</version>
           <configuration>
+            <downloadSources>true</downloadSources>
             <wtpversion>2.0</wtpversion>
             <wtpContextName>${project.artifactId}</wtpContextName>
           </configuration>
@@ -168,47 +170,40 @@
         <artifactId>commons-pool</artifactId>
         <version>1.6</version>
       </dependency>
-      <!--
       <dependency>
         <groupId>org.apache.activemq</groupId>
         <artifactId>activemq-broker</artifactId>
-        <version>${apache.activemq.version}</version>
+        <version>${activemq.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.activemq</groupId>
         <artifactId>activemq-kahadb-store</artifactId>
-        <version>${apache.activemq.version}</version>
-      </dependency>
-      -->
-      <dependency>
-        <groupId>org.apache.activemq</groupId>
-        <artifactId>activemq-core</artifactId>
-        <version>${apache.activemq.version}</version>
+        <version>${activemq.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-        <version>${apache.cxf.version}</version>
+        <version>${cxf.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-frontend-jaxws</artifactId>
-        <version>${apache.cxf.version}</version>
+        <version>${cxf.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-rs-extension-providers</artifactId>
-        <version>${apache.cxf.version}</version>
+        <version>${cxf.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-transports-http</artifactId>
-        <version>${apache.cxf.version}</version>
+        <version>${cxf.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-transports-jms</artifactId>
-        <version>${apache.cxf.version}</version>
+        <version>${cxf.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.httpcomponents</groupId>
@@ -223,27 +218,27 @@
       <dependency>
         <groupId>org.apache.jackrabbit</groupId>
         <artifactId>jackrabbit-api</artifactId>
-        <version>${apache.jackrabbit.version}</version>
+        <version>${jackrabbit.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.jackrabbit</groupId>
         <artifactId>jackrabbit-core</artifactId>
-        <version>${apache.jackrabbit.version}</version>
+        <version>${jackrabbit.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.jackrabbit</groupId>
         <artifactId>jackrabbit-jcr-commons</artifactId>
-        <version>${apache.jackrabbit.version}</version>
+        <version>${jackrabbit.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.jackrabbit</groupId>
         <artifactId>jackrabbit-spi</artifactId>
-        <version>${apache.jackrabbit.version}</version>
+        <version>${jackrabbit.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.jackrabbit</groupId>
         <artifactId>jackrabbit-spi-commons</artifactId>
-        <version>${apache.jackrabbit.version}</version>
+        <version>${jackrabbit.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
@@ -375,7 +370,24 @@
       <dependency>
         <groupId>org.apache.lucene</groupId>
         <artifactId>lucene-core</artifactId>
-        <version>3.0.3</version>
+        <version>${lucene.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lucene</groupId>
+        <artifactId>lucene-queryparser</artifactId>
+        <version>${lucene.version}</version>
+      </dependency>
+      <!--
+      <dependency>
+        <groupId>org.apache.lucene</groupId>
+        <artifactId>lucene-analyzers-common</artifactId>
+        <version>${lucene.version}</version>
+      </dependency>
+      -->
+      <dependency>
+        <groupId>org.apache.lucene</groupId>
+        <artifactId>lucene-analyzers</artifactId>
+        <version>${lucene.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.tika</groupId>
@@ -411,13 +423,13 @@
       <dependency>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-testutils</artifactId>
-        <version>${apache.cxf.version}</version>
+        <version>${cxf.version}</version>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-transports-http-jetty</artifactId>
-        <version>${apache.cxf.version}</version>
+        <version>${cxf.version}</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -457,6 +469,7 @@
     <module>apache-jackrabbit-sample5</module>
     <module>apache-jackrabbit-sample6</module>
     <module>apache-jackrabbit-sample7</module>
+    <module>apache-lucene-sample1</module>
     <module>eclipse-jetty-sample1-servlet</module>
     <module>eclipse-jetty-sample2-spring</module>
     <module>gwt-sample1</module>

@@ -69,7 +69,7 @@ public class TransientRepositoryTest
         assertEquals("Apache Software Foundation", repository.getDescriptor(Repository.REP_VENDOR_DESC));
         assertEquals("http://jackrabbit.apache.org/", repository.getDescriptor(Repository.REP_VENDOR_URL_DESC));
         assertEquals("Jackrabbit", repository.getDescriptor(Repository.REP_NAME_DESC));
-        assertEquals("2.4.4", repository.getDescriptor(Repository.REP_VERSION_DESC));
+        assertEquals("2.6.2", repository.getDescriptor(Repository.REP_VERSION_DESC));
     }
 
     @Test
